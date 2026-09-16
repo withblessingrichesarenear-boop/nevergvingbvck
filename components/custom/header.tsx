@@ -46,7 +46,7 @@ function AccountLabel({ type }: { type: 'demo' | 'real' }) {
   return (
     <span
       className={cn(
-        'text-sm font-medium',
+        'text-xs font-medium',
         type === 'demo' ? 'text-orange-500' : 'text-emerald-600'
       )}
     >
@@ -100,7 +100,7 @@ export function Header({
             {logoLetter}
           </div>
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element -- next/image is avoided here intentionally: it errors in the optimizer when /logo.png is absent locally; a plain img with onError gives the same silent fallback behaviour
+          // eslint-disable-next-line @next/next/no-img-element -- next/image is avoided here intentionally: it errors in the optimizer when /logo.png is absent locally; a plain img with onError [...]
           <img
             src={logoSrc}
             alt={localize('App Logo')}
@@ -120,16 +120,16 @@ export function Header({
         {isAuthenticated && activeAccount && (
           <Popover open={accountSwitcherOpen} onOpenChange={setAccountSwitcherOpen}>
             <PopoverTrigger asChild>
-              <button className="flex items-center gap-2 rounded-lg border border-border px-3 hover:bg-muted/50 transition-colors">
+              <button className="flex items-center gap-2 rounded-lg border border-border px-2.5 py-1.5 hover:bg-muted/50 transition-colors">
                 <div className="text-left">
                   <AccountLabel type={activeAccount.account_type} />
-                  <p className="text-base font-bold text-foreground">
+                  <p className="text-sm font-semibold text-foreground">
                     {formatBalance(activeAccount.balance, numberLocale)} {activeAccount.currency}
                   </p>
                 </div>
                 <svg
                   className={cn(
-                    'w-4 h-4 text-muted-foreground transition-transform',
+                    'w-3.5 h-3.5 text-muted-foreground transition-transform',
                     accountSwitcherOpen && 'rotate-180'
                   )}
                   fill="none"
