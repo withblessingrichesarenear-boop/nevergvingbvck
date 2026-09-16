@@ -46,7 +46,7 @@ function AccountLabel({ type }: { type: 'demo' | 'real' }) {
   return (
     <span
       className={cn(
-        'text-xs font-medium',
+        'text-xs font-medium leading-tight',
         type === 'demo' ? 'text-orange-500' : 'text-emerald-600'
       )}
     >
@@ -93,10 +93,10 @@ export function Header({
   const isAuthenticating = authState === 'authenticating';
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 border-b bg-background/80 backdrop-blur-sm">
-      <div className="flex items-center gap-3">
+    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-3 py-2 border-b bg-background/80 backdrop-blur-sm h-16">
+      <div className="flex items-center gap-2">
         {!logoSrc || logoError ? (
-          <div className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
+          <div className="w-7 h-7 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
             {logoLetter}
           </div>
         ) : (
@@ -104,32 +104,32 @@ export function Header({
           <img
             src={logoSrc}
             alt={localize('App Logo')}
-            className="h-8 w-auto object-contain"
+            className="h-7 w-auto object-contain"
             onError={() => setLogoError(true)}
           />
         )}
         {shouldShowName && (
-          <h1 className="text-lg font-semibold text-foreground hidden sm:block">
+          <h1 className="text-sm font-semibold text-foreground hidden sm:block">
             {resolvedName}
           </h1>
         )}
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         {actions}
         <LanguageSwitcher />
         {isAuthenticated && activeAccount && (
           <Popover open={accountSwitcherOpen} onOpenChange={setAccountSwitcherOpen}>
             <PopoverTrigger asChild>
-              <button className="flex items-center gap-2 rounded-lg border border-border px-2.5 py-1.5 hover:bg-muted/50 transition-colors">
+              <button className="flex items-center gap-1.5 rounded-md border border-border px-2 py-1 hover:bg-muted/50 transition-colors text-xs">
                 <div className="text-left">
                   <AccountLabel type={activeAccount.account_type} />
-                  <p className="text-sm font-semibold text-foreground">
+                  <p className="text-xs font-semibold text-foreground leading-tight">
                     {formatBalance(activeAccount.balance, numberLocale)} {activeAccount.currency}
                   </p>
                 </div>
                 <svg
                   className={cn(
-                    'w-3.5 h-3.5 text-muted-foreground transition-transform',
+                    'w-3 h-3 text-muted-foreground transition-transform flex-shrink-0',
                     accountSwitcherOpen && 'rotate-180'
                   )}
                   fill="none"
@@ -141,8 +141,8 @@ export function Header({
                 </svg>
               </button>
             </PopoverTrigger>
-            <PopoverContent align="end" className="z-[100] w-64 p-2">
-              <div className="space-y-1">
+            <PopoverContent align="end" className="z-[100] w-56 p-1">
+              <div className="space-y-0.5">
                 {accounts.map((account) => (
                   <button
                     key={account.account_id}
@@ -151,14 +151,14 @@ export function Header({
                       setAccountSwitcherOpen(false);
                     }}
                     className={cn(
-                      'w-full text-left rounded-lg px-3 py-2.5 transition-colors',
+                      'w-full text-left rounded-md px-2 py-1.5 transition-colors text-xs',
                       account.account_id === activeAccount.account_id
                         ? 'bg-muted'
                         : 'hover:bg-muted/50'
                     )}
                   >
                     <AccountLabel type={account.account_type} />
-                    <p className="text-base font-bold text-foreground">
+                    <p className="text-xs font-semibold text-foreground leading-tight">
                       {formatBalance(account.balance, numberLocale)} {account.currency}
                     </p>
                   </button>
@@ -168,12 +168,12 @@ export function Header({
           </Popover>
         )}
         {isAuthenticated ? (
-          <Button variant="outline" onClick={onLogout}>
+          <Button variant="outline" size="sm" onClick={onLogout} className="text-xs h-7">
             <Localize i18n_default_text="Log out" />
           </Button>
         ) : (
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={onLogin} disabled={isAuthenticating}>
+          <div className="flex items-center gap-1">
+            <Button variant="outline" size="sm" onClick={onLogin} disabled={isAuthenticating} className="text-xs h-7 px-2">
               {isAuthenticating ? (
                 <Localize i18n_default_text="Logging in..." />
               ) : (
@@ -181,7 +181,7 @@ export function Header({
               )}
             </Button>
             {onSignUp && (
-              <Button size="sm" onClick={onSignUp} disabled={isAuthenticating}>
+              <Button size="sm" onClick={onSignUp} disabled={isAuthenticating} className="text-xs h-7 px-2">
                 <Localize i18n_default_text="Sign up" />
               </Button>
             )}
